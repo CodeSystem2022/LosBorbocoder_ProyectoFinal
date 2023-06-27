@@ -1,4 +1,4 @@
-from LosBorbocoders_ProyectoFinal.src.base_de_datos.Conexion import Conexion
+from base_de_datos.Conexion import Conexion
 
 
 class Autenticacion:
