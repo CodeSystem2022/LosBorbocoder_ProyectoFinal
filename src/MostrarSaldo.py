@@ -9,19 +9,19 @@ while True:
  print("4. Salir")
 
  opcion = input("Seleccione una opción: ")
-  
+
  if opcion == "1":
- registrar_usuario()
+  registrar_usuario()
  elif opcion == "2":
- usuario_actual = iniciar_sesion()
+  usuario_actual = iniciar_sesion()
  if usuario_actual is None:
- continue
+  continue
  elif opcion == "3":
- if "usuario_actual" in locals():
- mostrar_saldo(usuario_actual)
- else:
- print("Debe iniciar sesión para ver el saldo.\n")
+  if "usuario_actual" in locals():
+   mostrar_saldo(usuario_actual)
+  else:
+   print("Debe iniciar sesión para ver el saldo.\n")
  elif opcion == "4":
- break
+  break
  else:
- print("Opción inválida. Por favor, intente nuevamente.\n")
+  print("Opción inválida. Por favor, intente nuevamente.\n")
