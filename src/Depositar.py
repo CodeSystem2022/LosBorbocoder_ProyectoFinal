@@ -4,7 +4,6 @@ from decimal import Decimal
 class Depositar:
 
     def depositar(self):
-        # Conectarse a la base de datos PostgreSQL
         conexion = psycopg2.connect(
             host='127.0.0.1',
             port='5432',
