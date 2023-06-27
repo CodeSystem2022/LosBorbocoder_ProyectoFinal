@@ -1,8 +1,8 @@
-import Autenticacion
-import Depositar as dep
-import MostrarSaldo as saldo
-import RegistrarUsuario as reg
-import Retirar as ret
+import MostrarSaldo
+import RegistrarUsuario
+from Autenticacion import Autenticacion
+from Depositar import Depositar
+from Retirar import Retirar
 
 
 class Menu:
@@ -24,16 +24,16 @@ class Menu:
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
-                reg.registrar_usuario()
+                RegistrarUsuario.registrar_usuario()
             elif opcion == "2":
                 autenticacion = Autenticacion(self)
                 autenticacion.iniciar_sesion()
             elif opcion == "3" and self.usuario_actual:
-                saldo.mostrar_saldo()
+                MostrarSaldo.mostrar_saldo()
             elif opcion == "4" and self.usuario_actual:
-                dep.depositar()
+                Depositar.depositar()
             elif opcion == "5" and self.usuario_actual:
-                ret.retirar()
+                Retirar.retirar()
             elif opcion == "6":
                 break
             else:
