@@ -15,6 +15,7 @@ def registrar_usuario():
    if count > 0:
     print("Error: Ya existe un usuario con ese nombre o correo electrónico.")
    else:
-    cursor.execute('INSERT INTO usuarios ("user", password, email) VALUES (%s, %s, %s)', (nombre, password, email))
+    #se inicializa balance en 0 ya que las columnas son not null y account se auto incrementa
+    cursor.execute('INSERT INTO usuarios ("user", password, email, balance) VALUES (%s, %s, %s, 0)', (nombre, password, email))
     conn.commit()
     print("Usuario registrado exitosamente.")
