@@ -28,8 +28,7 @@ class Menu:
                 autenticacion = Autenticacion(self)
                 autenticacion.iniciar_sesion()
             elif opcion == "3" and self.usuario_actual:
-                pass
-                # saldo.mostrar_saldo()
+                MostrarSaldo.mostrar_saldo(self, self.usuario_actual)
             elif opcion == "4" and self.usuario_actual:
                 pass
                 # dep.depositar()
