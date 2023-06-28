@@ -2,7 +2,10 @@ from psycopg2 import pool
 import psycopg2 as bd
 import sys
 
+'''
 from src.base_de_datos import Logger
+'''
+
 
 
 class Conexion:
@@ -23,10 +26,12 @@ class Conexion:
                                   password=cls._PASSWORD,
                                   port=cls._DB_PORT,
                                   database=cls._DATABASE)
+
             #Logger.debug(f'Conexión exitosa: {conexion}')
             return conexion
         except Exception as e:
             #Logger.error(f'Ocurrió un error: {e}')
+
             sys.exit()
 
     @classmethod
@@ -44,10 +49,12 @@ class Conexion:
                                                       password=cls._PASSWORD,
                                                       port=cls._DB_PORT,
                                                       database=cls._DATABASE)
+
                 #Logger.debug(f'Pool creado con éxito: {cls._pool}')
                 return cls._pool
             except Exception as e:
                 #Logger.error(f'Hubo un error al obtener el pool de conexión: {e}')
+
                 sys.exit()
         else:
             return cls._pool
