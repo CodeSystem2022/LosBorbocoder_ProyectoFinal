@@ -11,15 +11,16 @@ class Menu:
     def mostrar_menu(self):
         while True:
             print("Bienvenido")
-            print("1. Registrar usuario")
-            print("2. Iniciar sesión")
+            if not self.usuario_actual:
+                print("1. Registrar usuario")
+                print("2. Iniciar sesión")
 
             if self.usuario_actual:
                 print("3. Mostrar saldos")
                 print("4. Depositar")
                 print("5. Retirar")
-
-            print("6. Salir")
+                print("6. Cerrar sesion")
+            print("7. Salir")
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
