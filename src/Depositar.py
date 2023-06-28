@@ -7,10 +7,10 @@ class Depositar:
         with Conexion.obtener_conexion() as conn:
             with conn.cursor() as cursor:
 
-        # Obtener el saldo actual de la base de datos
-            cursor.execute("SELECT balance FROM usuarios WHERE user = %s ")
-            saldo_actual = Decimal(cursor.fetchone()[0])
-            monto_a_depositar = input("Ingrese el monto a depositar: ")
+                # Obtener el saldo actual de la base de datos
+                cursor.execute("SELECT balance FROM usuarios WHERE user = %s ")
+                saldo_actual = Decimal(cursor.fetchone()[0])
+                monto_a_depositar = input("Ingrese el monto a depositar: ")
 
         # Calcular el nuevo saldo sumando el monto depositado
         nuevo_saldo = saldo_actual + monto_a_depositar
