@@ -17,3 +17,4 @@ def registrar_usuario():
     cursor.execute("INSERT INTO usuarios (nombre, password, email) VALUES (%s, %s, %s)", (nombre, password, email))
     conn.commit()
     print("Usuario registrado exitosamente.")
+
