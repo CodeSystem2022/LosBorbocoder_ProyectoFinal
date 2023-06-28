@@ -11,7 +11,7 @@ from src.base_de_datos import Logger
 class Conexion:
     _DATABASE = 'usuarios'
     _USERNAME = 'postgres'
-    _PASSWORD = 'admin'
+    _PASSWORD = 'admin95'
     _DB_PORT = '5432'
     _HOST = '127.0.0.1'
     _MIN_CON = 1
