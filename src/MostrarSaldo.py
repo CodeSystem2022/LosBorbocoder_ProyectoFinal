@@ -11,6 +11,7 @@ class MostrarSaldo:
             password='admin'
         )
 
+        # Abro cursor
         cursor = conexion.cursor()
 
         # Consulta para obtener el saldo del usuario
