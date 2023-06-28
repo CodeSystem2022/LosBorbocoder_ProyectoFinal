@@ -1,9 +1,9 @@
-
-import MostrarSaldo
 import RegistrarUsuario
 from Autenticacion import Autenticacion
-from Depositar import Depositar
-from Retirar import Retirar
+
+import Retirar
+from src import Depositar, MostrarSaldo
+from src.Depositar import Depositar
 
 
 class Menu:
@@ -12,34 +12,48 @@ class Menu:
 
     def mostrar_menu(self):
         while True:
-            print("Bienvenido")
-            print("1. Registrar usuario")
-            print("2. Iniciar sesión")
+            if not self.usuario_actual:
+                print("Bienvenido")
+                print("1. Registrar usuario")
+                print("2. Iniciar sesión")
+                print("7. Salir")
+                opcion = input("Seleccione una opción: ")
 
-            if self.usuario_actual:
-                print("3. Mostrar saldos")
-                print("4. Depositar")
-                print("5. Retirar")
+                if opcion == "1":
+                    RegistrarUsuario.registrar_usuario()
+                elif opcion == "2":
+                    autenticacion = Autenticacion(self)
+                    autenticacion.iniciar_sesion()
 
-            print("6. Salir")
+                elif opcion == "7":
+                    break
+                else:
+                    print("Opción inválida. Por favor, intente nuevamente.\n")
+            else:
+                self.mostrar_menu_sesion()
+
+    def mostrar_menu_sesion(self):
+        while True:
+            print("1. Mostrar saldos")
+            print("2. Depositar")
+            print("3. Retirar")
+            print("4. Cerrar sesión")
+            print("7. Salir")
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
-                RegistrarUsuario.registrar_usuario()
-            elif opcion == "2":
-                pass
-                #autenticacion = Autenticacion(self)
-                #autenticacion.iniciar_sesion()
+                if self.usuario_actual:
+                    MostrarSaldo.mostrar_saldo(self, self.usuario_actual)
+                else:
+                    print("Debe iniciar sesión para ver los saldos.")
+            elif opcion == "2" and self.usuario_actual:
+                 Depositar.depositar()
             elif opcion == "3" and self.usuario_actual:
-                pass
-                #saldo.mostrar_saldo()
+                 Retirar.retirar()
             elif opcion == "4" and self.usuario_actual:
-                pass
-                #dep.depositar()
-            elif opcion == "5" and self.usuario_actual:
-                pass
-                #ret.retirar()
-            elif opcion == "6":
+                self.usuario_actual = None
+                break
+            elif opcion == "7":
                 break
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
