@@ -1,10 +1,8 @@
-
 import MostrarSaldo
 import RegistrarUsuario
 from Autenticacion import Autenticacion
-from Depositar import Depositar
-from Retirar import Retirar
-
+import Depositar
+import Retirar
 
 class Menu:
     def __init__(self):
@@ -13,32 +11,31 @@ class Menu:
     def mostrar_menu(self):
         while True:
             print("Bienvenido")
-            print("1. Registrar usuario")
-            print("2. Iniciar sesión")
+            if not self.usuario_actual:
+                print("1. Registrar usuario")
+                print("2. Iniciar sesión")
 
             if self.usuario_actual:
                 print("3. Mostrar saldos")
                 print("4. Depositar")
                 print("5. Retirar")
-
-            print("6. Salir")
+                print("6. Cerrar sesion")
+            print("7. Salir")
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
                 RegistrarUsuario.registrar_usuario()
             elif opcion == "2":
-                pass
-                #autenticacion = Autenticacion(self)
-                #autenticacion.iniciar_sesion()
+                autenticacion = Autenticacion(self)
+                autenticacion.iniciar_sesion()
             elif opcion == "3" and self.usuario_actual:
-                pass
-                #saldo.mostrar_saldo()
+                MostrarSaldo.mostrar_saldo(self, self.usuario_actual)
             elif opcion == "4" and self.usuario_actual:
                 pass
-                #dep.depositar()
+                # dep.depositar()
             elif opcion == "5" and self.usuario_actual:
                 pass
-                #ret.retirar()
+                # ret.retirar()
             elif opcion == "6":
                 break
             else:
