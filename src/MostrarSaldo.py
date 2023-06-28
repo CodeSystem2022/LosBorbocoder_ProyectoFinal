@@ -1,27 +1,38 @@
-def mostrar_saldo(usuario): #La función muestra el saldo actual del usuario pasado como argumento
- print("Saldo actual: $", usuario["saldo"])
+import psycopg2
+from psycopg2 import connect
 
-while True:
- print("Bienvenido")
- print("1. Registrar usuario")
- print("2. Iniciar sesión")
- print("3. Mostrar saldo")
- print("4. Salir")
+class MostrarSaldo:
+    def mostrarSaldo(user_id):
+        conexion = psycopg2.connect(
+            host='127.0.0.1',
+            port='5432',
+            database='test_bd',
+            user='postgres',
+            password='admin'
+        )
 
- opcion = input("Seleccione una opción: ")
+        # Crear un cursor para ejecutar las consultas
+        cursor = conexion.cursor()
 
- if opcion == "1":
-  registrar_usuario()
- elif opcion == "2":
-  usuario_actual = iniciar_sesion()
- if usuario_actual is None:
-  continue
- elif opcion == "3":
-  if "usuario_actual" in locals():
-   mostrar_saldo(usuario_actual)
-  else:
-   print("Debe iniciar sesión para ver el saldo.\n")
- elif opcion == "4":
-  break
- else:
-  print("Opción inválida. Por favor, intente nuevamente.\n")
+        # Consulta para obtener el saldo del usuario
+        consulta = "SELECT balance FROM usuarios WHERE account = 123456789"
+        cursor.execute(consulta)
+        
+
+        # Obtener el resultado de la consulta
+        resultado = cursor.fetchone()
+
+        if resultado:
+            saldo = resultado[0]
+            print(f"El saldo del usuario es: {saldo}")
+        else:
+            print("Usuario no encontrado")
+
+        # Cerrar el cursor y confirmar los cambios en la base de datos
+        cursor.close()
+        conexion.commit()
+        conexion.close()
+
+if __name__ == '__main__':
+    mostrar = MostrarSaldo()
+    mostrar.mostrarSaldo()
