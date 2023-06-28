@@ -1,3 +1,4 @@
+
 import MostrarSaldo
 import RegistrarUsuario
 from Autenticacion import Autenticacion
@@ -26,14 +27,18 @@ class Menu:
             if opcion == "1":
                 RegistrarUsuario.registrar_usuario()
             elif opcion == "2":
-                autenticacion = Autenticacion(self)
-                autenticacion.iniciar_sesion()
+                pass
+                #autenticacion = Autenticacion(self)
+                #autenticacion.iniciar_sesion()
             elif opcion == "3" and self.usuario_actual:
-                MostrarSaldo.mostrar_saldo()
+                pass
+                #saldo.mostrar_saldo()
             elif opcion == "4" and self.usuario_actual:
-                Depositar.depositar()
+                pass
+                #dep.depositar()
             elif opcion == "5" and self.usuario_actual:
-                Retirar.retirar()
+                pass
+                #ret.retirar()
             elif opcion == "6":
                 break
             else:
