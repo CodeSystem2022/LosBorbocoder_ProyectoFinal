@@ -1,10 +1,10 @@
+
 import RegistrarUsuario
 from Autenticacion import Autenticacion
 
 import Retirar
 from src import Depositar, MostrarSaldo
 from src.Depositar import Depositar
-
 
 class Menu:
     def __init__(self):
@@ -42,10 +42,12 @@ class Menu:
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
+            
                 if self.usuario_actual:
                     MostrarSaldo.mostrar_saldo(self, self.usuario_actual)
                 else:
                     print("Debe iniciar sesión para ver los saldos.")
+                    
             elif opcion == "2" and self.usuario_actual:
                  Depositar.depositar()
             elif opcion == "3" and self.usuario_actual:
@@ -54,6 +56,7 @@ class Menu:
                 self.usuario_actual = None
                 break
             elif opcion == "5":
+
                 break
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")

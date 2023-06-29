@@ -3,7 +3,6 @@ from src.Depositar import Depositar
 from src.Menu import Menu
 from src.Retirar import Retirar
 
-
 def mostrar_saldo(self, usuario_actual):
     # Obtener la conexión desde la clase Conexion
     conexion = Conexion.obtener_conexion()
@@ -26,13 +25,14 @@ def mostrar_saldo(self, usuario_actual):
         print(f"3- Volver al menu")
         opcion = input ("Seleccione una opcion: ")
         if opcion == 1:
-            '''Depositar.depositar()
+            Depositar.depositar()
         elif opcion == 2:
-            Retirar.retirar()'''
+            Retirar.retirar()
         elif opcion == 3:
             Menu.mostrar_menu_sesion()
         else:
             print("Opcion incorrecta. Intente nuevamente")
+
     else:
         print("Usuario no encontrado")
 
@@ -44,3 +44,4 @@ if __name__ == '__main__':
     usuario_actual = input("Ingrese el nombre de usuario: ")
     mostrar = MostrarSaldo()
     mostrar.mostrar_saldo(usuario_actual)
+
