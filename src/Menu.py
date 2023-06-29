@@ -16,7 +16,7 @@ class Menu:
                 print("Bienvenido")
                 print("1. Registrar usuario")
                 print("2. Iniciar sesión")
-                print("7. Salir")
+                print("3. Salir")
                 opcion = input("Seleccione una opción: ")
 
                 if opcion == "1":
@@ -25,7 +25,7 @@ class Menu:
                     autenticacion = Autenticacion(self)
                     autenticacion.iniciar_sesion()
 
-                elif opcion == "7":
+                elif opcion == "3":
                     break
                 else:
                     print("Opción inválida. Por favor, intente nuevamente.\n")
@@ -38,7 +38,7 @@ class Menu:
             print("2. Depositar")
             print("3. Retirar")
             print("4. Cerrar sesión")
-            print("7. Salir")
+            print("5. Salir")
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
@@ -53,7 +53,7 @@ class Menu:
             elif opcion == "4" and self.usuario_actual:
                 self.usuario_actual = None
                 break
-            elif opcion == "7":
+            elif opcion == "5":
                 break
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
