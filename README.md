@@ -1,11 +1,16 @@
-# LosBorbocoders_ProyectoFinal 🎓 
-
+# LosBorbocoders_ProyectoFinal 🎓
 <h1>Los Borbocoders :copyright:</h1>
+
+![243884073-8bb9f52f-2b75-4abc-8ba5-6fa8173ee153](https://github.com/CodeSystem2022/LosBorbocoders_ProyectoFinal/assets/106932015/e83d8129-c773-4296-bb1b-99eede3b2840)
+
 <h2>Tercer Semestre :computer:</h2>
 
-### *INTEGRANTES ACTIVOS EN REPOSITORIO:* 
+**_¡¡ORGULLOSAMENTE DESDE LA UTN FRSR AL MUNDO!!_**
 
-  
+![KL4vIdvv_400x400](https://github.com/CodeSystem2022/LosBorbocoders_ProyectoFinal/assets/106932015/bee27b9c-a88d-4646-8e32-f8b4d55876e5)
+
+***
+## INTEGRANTES:  
   - `Martin Ojeda`
   - `Paulina Rodriguez`
   - `Emilse Zalazar`
@@ -15,10 +20,20 @@
   - `Alessandra Marcano`
   - `Matias Didzius`
   - `Augusto Britos`
+***
+
+**_Proyecto integramente en PYTHON_**
+
+![python-powered](https://github.com/CodeSystem2022/LosBorbocoders_ProyectoFinal/assets/106932015/f4e0b3cc-bcca-4579-9ebe-eff87c8b757a)
+
+
 
 <h2>¿En qué consiste nuestro proyecto?</h2>
 
-<h5> VIRTUAL WALLET es una billetera virtual, que puede ser muy util de aplicar para cuando se requiere manejar depositos, utilizando registros de usuarios, autenticación, control de saldos y depositos  </h5>
+![mobile-wallet-icon-style-free-vector](https://github.com/CodeSystem2022/LosBorbocoders_ProyectoFinal/assets/106932015/c19605b6-1599-4752-94f6-8b4f0ea494ad)
+
+
+<h3> VIRTUAL WALLET es una billetera virtual, que puede ser muy util de aplicar para cuando se requiere manejar depositos, utilizando registros de usuarios, autenticación, control de saldos y depositos. </h3>
 
 
 <h4>1.Registro de usuarios:</h4>
