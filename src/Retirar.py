@@ -1,43 +1,37 @@
-import psycopg2
 from decimal import Decimal
-
+from src.base_de_datos.Conexion import Conexion
 
 class Retirar:
     def retirar(self):
-        try:
-            conexion = psycopg2.connect(
-                host='127.0.0.1',
-                port='5432',
-                database='test_bd',
-                user='postgres',
-                password='admin'
-            )
-            # Crear un cursor
-            cursor = conexion.cursor()
+        with Conexion.obtener_conexion() as conn:
+            with conn.cursor() as cursor:
 
-            # Solicitar al usuario el monto a retirar
-            monto_retiro = Decimal(input("Ingrese el monto a retirar: "))
+                # Obtener el saldo actual de la base de datos
+                cursor.execute('SELECT balance FROM usuarios WHERE "user" = %s',(self.usuario_actual, ))
+                saldo_actual = Decimal(cursor.fetchone()[0])
+                # Solicitar al usuario el monto a retirar
+                monto_retiro = Decimal(input("Ingrese el monto a retirar: "))
 
-            # Obtener el saldo actual desde la base de datos
-            cursor.execute(
-                "SELECT balance FROM usuarios WHERE account = 123456789")
-            saldo_actual = cursor.fetchone()[0]
+                # Verificar si el saldo es suficiente
+                if saldo_actual >= monto_retiro:
+                    # Actualizar el saldo restando el monto retirado
+                    saldo_actual -= monto_retiro
+                    cursor.execute('UPDATE usuarios SET "balance" = %s WHERE "user" = %s', (saldo_actual, self.usuario_actual))
+                    # Confirmar los cambios en la base de datos
+                    conn.commit()
+                    print("Retiro exitoso. Saldo actual:", saldo_actual)
+                else:
+                    print("Saldo insuficiente. Tu saldo es de:", saldo_actual)
 
-            # Verificar si el saldo es suficiente
-            if saldo_actual >= monto_retiro:
-                # Actualizar el saldo restando el monto retirado
-                saldo_actual -= monto_retiro
-                cursor.execute("UPDATE usuarios SET balance = %s WHERE account = 123456789",
-                            (saldo_actual,))  # Cambia "tabla_saldo" e "id" según tu estructura de base de datos
-                conexion.commit()
-                print("Retiro exitoso. Saldo restante:", saldo_actual)
-            else:
-                print("Saldo insuficiente. Tu saldo es de:", saldo_actual)
-        except Exception as e:
-                print(f'No ingreses letras, solo numeros')
-            # Cerrar la conexión con la base de datos
-                cursor.close()
-                conexion.close()
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

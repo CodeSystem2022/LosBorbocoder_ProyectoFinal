@@ -20,16 +20,16 @@ def mostrar_saldo(self, usuario_actual):
     if resultado:
         saldo = resultado[0]
         print(f"El saldo del usuario es: {saldo}")
-        print(f"1- Depositar")
-        print(f"2- Retirar")
-        print(f"3- Volver al menu")
+        print("1- Depositar")
+        print("2- Retirar")
+        print("3- Volver al menu")
         opcion = input ("Seleccione una opcion: ")
-        if opcion == 1:
-            Depositar.depositar()
-        elif opcion == 2:
-            Retirar.retirar()
-        elif opcion == 3:
-            Menu.mostrar_menu_sesion()
+        if opcion == '1':
+            Depositar.depositar(self)
+        elif opcion == '2':
+            Retirar.retirar(self)
+        elif opcion == '3':
+            Menu.mostrar_menu_sesion(self)
         else:
             print("Opcion incorrecta. Intente nuevamente")
 

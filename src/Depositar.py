@@ -8,15 +8,15 @@ class Depositar:
             with conn.cursor() as cursor:
 
                 # Obtener el saldo actual de la base de datos
-                cursor.execute("SELECT balance FROM usuarios WHERE user = %s ")
+                cursor.execute('SELECT balance FROM usuarios WHERE "user" = %s',(self.usuario_actual, ))
                 saldo_actual = Decimal(cursor.fetchone()[0])
-                monto_a_depositar = input("Ingrese el monto a depositar: ")
+                monto_a_depositar = Decimal(input("Ingrese el monto a depositar: "))
 
-        # Calcular el nuevo saldo sumando el monto depositado
-        nuevo_saldo = saldo_actual + monto_a_depositar
+                # Calcular el nuevo saldo sumando el monto depositado
+                nuevo_saldo = saldo_actual + monto_a_depositar
 
-        # Actualizar el saldo en la base de datos
-        cursor.execute("UPDATE usuarios SET balance = %s WHERE account = %s", (nuevo_saldo,))
+                # Actualizar el saldo en la base de datos
+                cursor.execute('UPDATE usuarios SET "balance" = %s WHERE "user" = %s', (nuevo_saldo, self.usuario_actual))
 
         # Confirmar los cambios en la base de datos
         conn.commit()
@@ -24,7 +24,7 @@ class Depositar:
         print("Depósito exitoso. Saldo actualizado.")
 
         # Cerrar la conexión
-        Conexion.close()
+        # Conexion.close()
 
 if __name__ == '__main__':
     depositar = Depositar()

@@ -1,11 +1,9 @@
 
 import RegistrarUsuario
 from Autenticacion import Autenticacion
-
-import Retirar
-from src import Depositar, MostrarSaldo
+from src import Depositar, MostrarSaldo, Retirar
 from src.Depositar import Depositar
-
+from src.Retirar import Retirar
 class Menu:
     def __init__(self):
         self.usuario_actual = None
@@ -49,17 +47,21 @@ class Menu:
                     print("Debe iniciar sesión para ver los saldos.")
                     
             elif opcion == "2" and self.usuario_actual:
-                 Depositar.depositar()
+                 Depositar.depositar(self)
             elif opcion == "3" and self.usuario_actual:
-                 Retirar.retirar()
+                 Retirar.retirar(self)
             elif opcion == "4" and self.usuario_actual:
-                self.usuario_actual = None
+                Menu.cerrar_sesion(self)
                 break
             elif opcion == "5":
-
                 break
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
+
+    def cerrar_sesion(self):
+        if(self.usuario_actual):
+            self.usuario_actual = None
+            print("Se ha cerrado la sesion.")
 
 if __name__ == '__main__':
     menu = Menu()
