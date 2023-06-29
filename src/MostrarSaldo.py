@@ -8,13 +8,16 @@ def mostrar_saldo(self, usuario_actual):
     conexion = Conexion.obtener_conexion()
 
     # Abro cursor
+
     cursor = conexion.cursor()
 
     # Consulta para obtener el saldo del usuario
+
     consulta = 'SELECT balance FROM usuarios WHERE "user" = %s'
     cursor.execute(consulta, (usuario_actual,))
 
     # Obtener el resultado de la consulta
+
     resultado = cursor.fetchone()
 
     if resultado:

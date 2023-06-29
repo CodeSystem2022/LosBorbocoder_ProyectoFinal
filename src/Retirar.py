@@ -7,12 +7,15 @@ class Retirar:
             with conn.cursor() as cursor:
 
                 # Obtener el saldo actual de la base de datos
+
                 cursor.execute('SELECT balance FROM usuarios WHERE "user" = %s',(self.usuario_actual, ))
                 saldo_actual = Decimal(cursor.fetchone()[0])
+
                 # Solicitar al usuario el monto a retirar
                 monto_retiro = Decimal(input("Ingrese el monto a retirar: "))
 
                 # Verificar si el saldo es suficiente
+
                 if saldo_actual >= monto_retiro:
                     # Actualizar el saldo restando el monto retirado
                     saldo_actual -= monto_retiro
