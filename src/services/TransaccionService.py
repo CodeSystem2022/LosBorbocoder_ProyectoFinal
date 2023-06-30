@@ -28,7 +28,8 @@ class TransaccionService:
                 transaccion = Transaccion(self.usuario_actual, monto)
                 self.retirar(transaccion)
             elif opcion == '3':
-                menu.mostrar_menu_sesion(self)
+                pass
+                #menu.mostrar_menu_sesion(self)
             else:
                 print("Opción incorrecta. Intente nuevamente")
         else:
