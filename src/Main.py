@@ -1,28 +1,31 @@
-
-import RegistrarUsuario
-from Autenticacion import Autenticacion
-from src import Depositar, MostrarSaldo, Retirar
-from src.Depositar import Depositar
-from src.Retirar import Retirar
+from src.models.Usuario import Usuario
+from src.models.Transaccion import Transaccion
+from src.services.TransaccionService import TransaccionService
+from src.services.UsuarioService import UsuarioService
+from decimal import *
 class Menu:
     def __init__(self):
         self.usuario_actual = None
+        self.usuario_service = UsuarioService(self)
+        self.transaccion_service = TransaccionService(self)
 
     def mostrar_menu(self):
         while True:
             if not self.usuario_actual:
-                print("Bienvenido")
+                print("***** Bienvenido *****")
                 print("1. Registrar usuario")
                 print("2. Iniciar sesión")
                 print("3. Salir")
                 opcion = input("Seleccione una opción: ")
 
                 if opcion == "1":
-                    RegistrarUsuario.registrar_usuario()
+                    nombre = input("Ingrese el nombre de usuario: ")
+                    password = input("Ingrese la contraseña: ")
+                    email = input("Ingrese el correo electrónico: ")
+                    user = Usuario(nombre, password, email)
+                    self.usuario_service.registrar_usuario(user)
                 elif opcion == "2":
-                    autenticacion = Autenticacion(self)
-                    autenticacion.iniciar_sesion()
-
+                    self.usuario_service.iniciar_sesion()
                 elif opcion == "3":
                     break
                 else:
@@ -40,18 +43,20 @@ class Menu:
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
-            
                 if self.usuario_actual:
-                    MostrarSaldo.mostrar_saldo(self, self.usuario_actual)
+                    self.transaccion_service.mostrar_saldo(self.usuario_actual)
                 else:
                     print("Debe iniciar sesión para ver los saldos.")
-                    
             elif opcion == "2" and self.usuario_actual:
-                 Depositar.depositar(self)
+                monto = Decimal(input("Ingrese el monto a depositar: "))
+                transaction = Transaccion(self.usuario_actual, monto)
+                self.transaccion_service.depositar(transaction)
             elif opcion == "3" and self.usuario_actual:
-                 Retirar.retirar(self)
+                monto = Decimal(input("Ingrese el monto a retirar: "))
+                transaction = Transaccion(self.usuario_actual, monto)
+                self.transaccion_service.retirar(transaction)
             elif opcion == "4" and self.usuario_actual:
-                Menu.cerrar_sesion(self)
+                self.cerrar_sesion()
                 break
             elif opcion == "5":
                 break
@@ -59,9 +64,10 @@ class Menu:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
 
     def cerrar_sesion(self):
-        if(self.usuario_actual):
+        if self.usuario_actual:
             self.usuario_actual = None
-            print("Se ha cerrado la sesion.")
+            print("Se ha cerrado la sesión.")
+
 
 if __name__ == '__main__':
     menu = Menu()

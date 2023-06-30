@@ -5,9 +5,6 @@ import sys
 '''
 from src.base_de_datos import Logger
 '''
-
-
-
 class Conexion:
     _DATABASE = 'usuarios'
     _USERNAME = 'postgres'
