@@ -35,6 +35,7 @@
 
 <h3> VIRTUAL WALLET es una billetera virtual, que puede ser muy util de aplicar para cuando se requiere manejar depositos, utilizando registros de usuarios, autenticación, control de saldos y depositos. </h3>
 
+Para lograr eso, procedimos a realizar los siguientes desarrollos:
 
 <h4>1.Registro de usuarios:</h4>
 
