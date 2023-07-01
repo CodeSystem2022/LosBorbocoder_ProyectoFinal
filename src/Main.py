@@ -59,7 +59,7 @@ class Menu:
                 self.cerrar_sesion()
                 break
             elif opcion == "5":
-                break
+                exit()
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
 
