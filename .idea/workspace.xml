@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1aeb1126-5391-41f0-bcd0-8fb3cbd6e752" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/base_de_datos/Conexion.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/base_de_datos/Conexion.py" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/src/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/TransaccionService.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TransaccionService.py" afterDir="false" />
->>>>>>> 82218ea (excepcion)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +35,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Mauro/final"
+    "last_opened_file_path": "C:/Users/Mauro/FInal_con_historial"
   }
 }]]></component>
   <component name="RunManager" selected="Python.Main">
