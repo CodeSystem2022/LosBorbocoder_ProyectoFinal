@@ -11,6 +11,8 @@ class TransaccionService:
         locale.setlocale(locale.LC_ALL, '')
 
     def mostrar_saldo(self, usuario_actual):
+        saldo = None
+        saldo_formateado = None
         self.usuario_actual = usuario_actual
         saldo = self.obtener_saldo(self.usuario_actual)
         if saldo is not None:
@@ -30,7 +32,6 @@ class TransaccionService:
                 self.retirar(transaccion)
             elif opcion == '3':
                 pass
-                #menu.mostrar_menu_sesion(self)
             else:
                 print("Opción incorrecta. Intente nuevamente")
         else:
@@ -45,18 +46,24 @@ class TransaccionService:
                 return resultado[0] if resultado else None
 
     def depositar(self, transaction: Transaccion):
+        saldo_actual = None
+        saldo_formateado = None
         saldo_actual = self.obtener_saldo(transaction.usuario)
         if saldo_actual is not None:
             saldo_actual += transaction.monto
+            transaction.monto = saldo_actual
             self.actualizar_saldo(transaction)
             saldo_formateado = self.formateo_moneda(saldo_actual)
             print(f"¡Depósito exitoso!\n{transaction.usuario}, su saldo es: {saldo_formateado}.")
 
     def retirar(self, transaction: Transaccion):
+        saldo_actual = None
+        saldo_formateado = None
         saldo_actual = self.obtener_saldo(transaction.usuario)
         if saldo_actual is not None:
             if saldo_actual >= transaction.monto:
                 saldo_actual -= transaction.monto
+                transaction.monto = saldo_actual
                 self.actualizar_saldo(transaction)
                 saldo_formateado = self.formateo_moneda(saldo_actual)
                 print(f"¡Retiro exitoso!\n{transaction.usuario}, su saldo es: {saldo_formateado}.")
