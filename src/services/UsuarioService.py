@@ -7,15 +7,17 @@ class UsuarioService:
     def registrar_usuario(self, user: Usuario):
         with Conexion.obtener_conexion() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT COUNT(*) FROM usuarios WHERE user = %s OR email = %s",
-                               (user.nombre, user.email))
-                count = cursor.fetchone()[0]
-
+                try:
+                    cursor.execute("SELECT COUNT(*) FROM usuarios WHERE user = %s OR email = %s",
+                                   (user.nombre, user.email))
+                    count = cursor.fetchone()[0]
+                except Exception as e:
+                    print(f"Ha ocurrido un error: {e}")
                 if count > 0:
                     print("Error: Ya existe un usuario con ese nombre o correo electrónico.")
                 else:
                     cursor.execute('INSERT INTO usuarios ("user", password, email, balance) VALUES (%s, %s, %s, 0)',
-                                   (user.nombre, user.password, user.email))
+                                    (user.nombre, user.password, user.email))
                     conn.commit()
                     print("Usuario registrado exitosamente.")
 
@@ -26,9 +28,11 @@ class UsuarioService:
 
         with Conexion.obtener_conexion() as conn:
             with conn.cursor() as cursor:
-                cursor.execute('SELECT COUNT(*) FROM usuarios WHERE "user" = %s AND "password" = %s', (user, password))
-                cuenta = cursor.fetchone()[0]
-
+                try:
+                    cursor.execute('SELECT COUNT(*) FROM usuarios WHERE "user" = %s AND "password" = %s', (user, password))
+                    cuenta = cursor.fetchone()[0]
+                except Exception as e:
+                    print(f"Inconvenientes al inciar sesión. Error: {e}")
                 if cuenta > 0:
                     self.menu.usuario_actual = user
                     print("Inicio de sesión exitoso.\n")

@@ -51,13 +51,19 @@ class Menu:
                 else:
                     print("Debe iniciar sesión para ver los saldos.")
             elif opcion == "2" and self.usuario_actual:
+                try:
                     monto = Decimal(input("Ingrese el monto a depositar: "))
                     transaction = Transaccion(self.usuario_actual, monto, 'Deposito')
                     self.transaccion_service.depositar(transaction)
+                except Exception as e:
+                    print(f"Error: Debe ingresar un valor numérico{e}")
             elif opcion == "3" and self.usuario_actual:
+                try:
                     monto = Decimal(input("Ingrese el monto a retirar: "))
                     transaction = Transaccion(self.usuario_actual, monto, 'Retiro')
                     self.transaccion_service.retirar(transaction)
+                except Exception as e:
+                    print(f"Error: Debe ingresar un valor numérico{e}")
             elif opcion == "4":
                 try:
                     self.transaccion_service.mostrarHistorial(self.usuario_actual)

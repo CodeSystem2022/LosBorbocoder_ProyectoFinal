@@ -1,13 +1,8 @@
-try:
-    from psycopg2 import pool
-    import psycopg2 as bd
-except ModuleNotFoundError as e:
-    print(f'Error: para conectarse y trabajar con base de datos debe instalar la librería de Python psycopg2: {e}')
+
+from psycopg2 import pool
+import psycopg2 as bd
 import sys
 
-'''
-from src.base_de_datos import Logger
-'''
 class Conexion:
     _DATABASE = 'usuarios'
     _USERNAME = 'postgres'
@@ -27,11 +22,9 @@ class Conexion:
                                   port=cls._DB_PORT,
                                   database=cls._DATABASE)
 
-            #Logger.debug(f'Conexión exitosa: {conexion}')
             return conexion
         except Exception as e:
-            #Logger.error(f'Ocurrió un error: {e}')
-
+            print(f"Ha ocurrido un error: {e}")
             sys.exit()
 
     @classmethod
@@ -50,10 +43,9 @@ class Conexion:
                                                       port=cls._DB_PORT,
                                                       database=cls._DATABASE)
 
-                #Logger.debug(f'Pool creado con éxito: {cls._pool}')
                 return cls._pool
             except Exception as e:
-                #Logger.error(f'Hubo un error al obtener el pool de conexión: {e}')
+                print(f"Ha ocurrido un error: {e}")
 
                 sys.exit()
         else:

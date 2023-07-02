@@ -14,10 +14,8 @@ class TransaccionService:
         saldo = None
         saldo_formateado = None
         self.usuario_actual = usuario_actual
-        try:
-            saldo = self.obtener_saldo(self.usuario_actual)
-        except Exception as e:
-            print(f"Ocurrió un error: mostrar saldo {e}")
+        saldo = self.obtener_saldo(self.usuario_actual)
+
         if saldo is not None:
             saldo_formateado = self.formateo_moneda(saldo)
             print(f"{self.usuario_actual}, su saldo es: {saldo_formateado}.")
@@ -41,15 +39,16 @@ class TransaccionService:
             print("El usuario no existe.")
 
     def obtener_saldo(self, usuario_actual):
-        try:
-            with Conexion.obtener_conexion() as conn:
-                with conn.cursor() as cursor:
+
+        with Conexion.obtener_conexion() as conn:
+            with conn.cursor() as cursor:
+                try:
                     consulta = 'SELECT "balance" FROM usuarios WHERE "user" = %s'
                     cursor.execute(consulta, (usuario_actual,))
                     resultado = cursor.fetchone()
                     return resultado[0] if resultado else None
-        except Exception as e:
-            print(f"Ocurrió un error: obtener saldo {e}")
+                except Exception as e:
+                    print(f"Ocurrió un error: obtener saldo {e}")
 
     def depositar(self, transaction: Transaccion):
         saldo_actual = None
@@ -79,10 +78,12 @@ class TransaccionService:
     def actualizar_saldo(self, transaction: Transaccion):
         with Conexion.obtener_conexion() as conn:
             with conn.cursor() as cursor:
-                consulta = 'UPDATE usuarios SET "balance" = %s WHERE "user" = %s'
-                cursor.execute(consulta, (transaction.monto, transaction.usuario))
-                conn.commit()
-
+                try:
+                    consulta = 'UPDATE usuarios SET "balance" = %s WHERE "user" = %s'
+                    cursor.execute(consulta, (transaction.monto, transaction.usuario))
+                    conn.commit()
+                except Exception as e:
+                    print(f"Ocurrió un error: obtener saldo {e}")
                 if cursor.rowcount > 0:
                     self.guardar_transaccion(transaction)
                 else:
@@ -96,8 +97,8 @@ class TransaccionService:
             try:
                 amount = locale.atof(input(message))
                 return Decimal(amount)
-            except error:
-                print("Monto inválido. Intente nuevamente.")
+            except Exception as error:
+                print(f"Monto inválido. Intente nuevamente. {error}")
 
     def guardar_transaccion(self, transaccion: Transaccion):
 
@@ -112,7 +113,7 @@ class TransaccionService:
                     conn.commit()
                     print("Transacción guardada exitosamente")
                 except psycopg2.Error as e:
-                    self.connection.rollback()
+                    conn.rollback()
                     print(f"Error al guardar la transacción: {e}")
 
     def obtenerTransacciones(self, usuario):
@@ -126,7 +127,7 @@ class TransaccionService:
                     cursor.execute(consulta, (usuario,))
                     transacciones = cursor.fetchall()
                     return transacciones
-                except psycopg2.Error as e:
+                except Exception as e:
                     print(f"Error al obtener las transacciones: {e}")
 
     def mostrarHistorial(self, usuario):
