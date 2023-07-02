@@ -2,6 +2,7 @@ from src.base_de_datos.Conexion import Conexion
 from src.models.Transaccion import Transaccion
 import locale
 from decimal import *
+from datetime import datetime
 
 class TransaccionService:
     def __init__(self, menu):
@@ -21,11 +22,11 @@ class TransaccionService:
             opcion = input("Seleccione una opción: ")
             if opcion == '1':
                 monto = self.obtener_monto_valido("Ingrese el monto a depositar: ")
-                transaccion = Transaccion(self.usuario_actual, monto)
+                transaccion = Transaccion(self.usuario_actual, monto,  "Deposito")
                 self.depositar(transaccion)
             elif opcion == '2':
                 monto = self.obtener_monto_valido("Ingrese el monto a retirar: ")
-                transaccion = Transaccion(self.usuario_actual, monto)
+                transaccion = Transaccion(self.usuario_actual, monto, "Retiro")
                 self.retirar(transaccion)
             elif opcion == '3':
                 pass
@@ -47,27 +48,32 @@ class TransaccionService:
         saldo_actual = self.obtener_saldo(transaction.usuario)
         if saldo_actual is not None:
             saldo_actual += transaction.monto
-            self.actualizar_saldo(transaction.usuario, saldo_actual)
+            self.actualizar_saldo(transaction)
             saldo_formateado = self.formateo_moneda(saldo_actual)
-            print(f"¡Depósito exitoso!\n{self.usuario_actual}, su saldo es: {saldo_formateado}.")
+            print(f"¡Depósito exitoso!\n{transaction.usuario}, su saldo es: {saldo_formateado}.")
 
     def retirar(self, transaction: Transaccion):
         saldo_actual = self.obtener_saldo(transaction.usuario)
         if saldo_actual is not None:
             if saldo_actual >= transaction.monto:
                 saldo_actual -= transaction.monto
-                self.actualizar_saldo(transaction.usuario, saldo_actual)
+                self.actualizar_saldo(transaction)
                 saldo_formateado = self.formateo_moneda(saldo_actual)
-                print(f"¡Retiro exitoso!\n{self.usuario_actual}, su saldo es: {saldo_formateado}.")
+                print(f"¡Retiro exitoso!\n{transaction.usuario}, su saldo es: {saldo_formateado}.")
             else:
                 print("Saldo insuficiente. Tu saldo es de:", saldo_actual)
 
-    def actualizar_saldo(self, user, new_balance):
+    def actualizar_saldo(self, transaction: Transaccion):
         with Conexion.obtener_conexion() as conn:
             with conn.cursor() as cursor:
                 consulta = 'UPDATE usuarios SET "balance" = %s WHERE "user" = %s'
-                cursor.execute(consulta, (new_balance, user))
+                cursor.execute(consulta, (transaction.monto, transaction.usuario))
                 conn.commit()
+
+                if cursor.rowcount > 0:
+                    self.guardar_transaccion(transaction)
+                else:
+                    print("Error: No se pudo actualizar el saldo.")
 
     def formateo_moneda(self, amount):
         return locale.currency(amount)
@@ -79,3 +85,53 @@ class TransaccionService:
                 return Decimal(amount)
             except error:
                 print("Monto inválido. Intente nuevamente.")
+
+    def guardar_transaccion(self, transaccion: Transaccion):
+
+        """
+        Guarda una transacción en la base de datos.
+        """
+        with Conexion.obtener_conexion() as conn:
+            with conn.cursor() as cursor:
+                try:
+                    query = 'INSERT INTO "transactions" ("user", amount, "time", "operation") VALUES (%s, %s, current_timestamp, %s)'
+                    cursor.execute(query, (transaccion.usuario, transaccion.monto, transaccion.operacion))
+                    conn.commit()
+                    print("Transacción guardada exitosamente")
+                except psycopg2.Error as e:
+                    self.connection.rollback()
+                    print(f"Error al guardar la transacción: {e}")
+
+    def obtenerTransacciones(self, usuario):
+        """
+        Obtiene todas las transacciones de un usuario específico de la base de datos.
+        """
+        with Conexion.obtener_conexion() as conn:
+            with conn.cursor() as cursor:
+                try:
+                    consulta = 'SELECT * FROM "transactions" WHERE "user" = %s'
+                    cursor.execute(consulta, (usuario,))
+                    transacciones = cursor.fetchall()
+                    return transacciones
+                except psycopg2.Error as e:
+                    print(f"Error al obtener las transacciones: {e}")
+
+    def mostrarHistorial(self, usuario):
+        transacciones = self.obtenerTransacciones(usuario)
+        if transacciones:
+            print("Historial de transacciones:")
+            for transaccion in transacciones:
+
+                op = ''
+
+                if (transaccion[4]) == "Deposito":
+                    op = 'Deposito: '
+                else:
+                    op = 'Retiro: '
+
+                date = transaccion[3]
+                formatted_date = date.strftime('%d/%m/%Y %H:%M')
+
+                print(f"{op} Fecha: {formatted_date} - Monto: {self.formateo_moneda(transaccion[2])}")
+        else:
+            print("No se encontraron transacciones para el usuario.")
