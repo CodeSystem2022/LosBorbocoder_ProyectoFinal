@@ -1,5 +1,8 @@
-from psycopg2 import pool
-import psycopg2 as bd
+try:
+    from psycopg2 import pool
+    import psycopg2 as bd
+except ModuleNotFoundError as e:
+    print(f'Error: para conectarse y trabajar con base de datos debe instalar la librería de Python psycopg2: {e}')
 import sys
 
 '''
