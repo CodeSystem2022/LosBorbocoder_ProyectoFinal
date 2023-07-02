@@ -38,8 +38,9 @@ class Menu:
             print("1. Mostrar saldos")
             print("2. Depositar")
             print("3. Retirar")
-            print("4. Cerrar sesión")
-            print("5. Salir")
+            print("4. Ver historial")
+            print("5. Cerrar sesión")
+            print("6. Salir")
             opcion = input("Seleccione una opción: ")
 
             if opcion == "1":
@@ -49,17 +50,20 @@ class Menu:
                     print("Debe iniciar sesión para ver los saldos.")
             elif opcion == "2" and self.usuario_actual:
                 monto = Decimal(input("Ingrese el monto a depositar: "))
-                transaction = Transaccion(self.usuario_actual, monto)
+                transaction = Transaccion(self.usuario_actual, monto, 'Deposito')
                 self.transaccion_service.depositar(transaction)
             elif opcion == "3" and self.usuario_actual:
                 monto = Decimal(input("Ingrese el monto a retirar: "))
-                transaction = Transaccion(self.usuario_actual, monto)
+                transaction = Transaccion(self.usuario_actual, monto, 'Retiro')
                 self.transaccion_service.retirar(transaction)
-            elif opcion == "4" and self.usuario_actual:
+            elif opcion == "4":
+                self.transaccion_service.mostrarHistorial(self.usuario_actual)
+            elif opcion == "5" and self.usuario_actual:
                 self.cerrar_sesion()
                 break
-            elif opcion == "5":
-                break
+            elif opcion == "6":
+                exit()
+
             else:
                 print("Opción inválida. Por favor, intente nuevamente.\n")
 
