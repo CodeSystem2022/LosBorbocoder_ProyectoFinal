@@ -12,7 +12,10 @@ class TransaccionService:
 
     def mostrar_saldo(self, usuario_actual):
         self.usuario_actual = usuario_actual
-        saldo = self.obtener_saldo(self.usuario_actual)
+        try:
+            saldo = self.obtener_saldo(self.usuario_actual)
+        except Exception as e:
+            print(f"Ocurrió un error: mostrar saldo {e}")
         if saldo is not None:
             saldo_formateado = self.formateo_moneda(saldo)
             print(f"{self.usuario_actual}, su saldo es: {saldo_formateado}.")
@@ -37,12 +40,15 @@ class TransaccionService:
             print("El usuario no existe.")
 
     def obtener_saldo(self, usuario_actual):
-        with Conexion.obtener_conexion() as conn:
-            with conn.cursor() as cursor:
-                consulta = 'SELECT "balance" FROM usuarios WHERE "user" = %s'
-                cursor.execute(consulta, (usuario_actual,))
-                resultado = cursor.fetchone()
-                return resultado[0] if resultado else None
+        try:
+            with Conexion.obtener_conexion() as conn:
+                with conn.cursor() as cursor:
+                    consulta = 'SELECT "balance" FROM usuarios WHERE "user" = %s'
+                    cursor.execute(consulta, (usuario_actual,))
+                    resultado = cursor.fetchone()
+                    return resultado[0] if resultado else None
+        except Exception as e:
+            print(f"Ocurrió un error: obtener saldo {e}")
 
     def depositar(self, transaction: Transaccion):
         saldo_actual = self.obtener_saldo(transaction.usuario)
