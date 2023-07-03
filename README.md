@@ -26,7 +26,25 @@
 
 ![python-powered](https://github.com/CodeSystem2022/LosBorbocoders_ProyectoFinal/assets/106932015/f4e0b3cc-bcca-4579-9ebe-eff87c8b757a)
 
-
+**_Estructura del código_**
+```
+src/
+├── base_datos/
+│   ├── __init__.py
+│   └── Conexion.py
+│
+├── services/
+│   ├── __init__.py
+│   ├── user_service.py
+│   └── transaction_service.py
+│   
+├── models/
+│   ├── __init__.py
+│   ├── user.py
+│   └── transaction.py
+│   
+└── main.py
+```
 
 <h2>¿En qué consiste nuestro proyecto?</h2>
 
